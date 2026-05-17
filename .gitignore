@@ -3,3 +3,5 @@ data/db.json
 uploads/
 *.log
 .env
+
+cookie.txt
