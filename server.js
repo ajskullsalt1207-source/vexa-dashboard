@@ -16,6 +16,7 @@ const io = new Server(server, {
 });
 
 const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || '0.0.0.0';
 const ADMIN_USER = 'admin';
 const ADMIN_PASS = 'wax-kuzay';
 const DB_PATH = path.join(__dirname, 'data', 'db.json');
@@ -481,6 +482,6 @@ io.on('connection', (socket) => {
 
 app.use((req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
-server.listen(PORT, () => {
-  console.log(`VEXA Dashboard running at http://localhost:${PORT}`);
+server.listen(PORT, HOST, () => {
+  console.log(`VEXA Dashboard running on port ${PORT}`);
 });
