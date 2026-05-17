@@ -419,36 +419,9 @@ io.on('connection', (socket) => {
     joinedUserId = String(userId);
     socket.join(joinedUserId);
 
-    const db = loadDB();
-    const user = db.users.find(u => u.id === joinedUserId || u.username === joinedUserId);
-    if (user && db.hits.filter(h => h.user_id === user.id).length < 3) {
-      for (let i = 0; i < 5; i++) {
-        const hit = generateMockHit(user.id);
-        hit.id = db.nextHitId++;
-        db.hits.push(hit);
-      }
-      saveDB(db);
-    }
-
     const clients = generateMockClients(joinedUserId);
     clientPcs[joinedUserId] = clients;
     socket.emit('clients-update', clients);
-
-    if (Math.random() > 0.7) {
-      setTimeout(() => {
-        const db2 = loadDB();
-        const user2 = db2.users.find(u => u.id === joinedUserId || u.username === joinedUserId);
-        if (user2) {
-          const hit = generateMockHit(user2.id);
-          hit.id = db2.nextHitId++;
-          db2.hits.push(hit);
-          saveDB(db2);
-          const h = { ...hit };
-          delete h.user_id;
-          io.to(joinedUserId).emit('new-hit', h);
-        }
-      }, 15000);
-    }
   });
 
   let pingTimers = {};
