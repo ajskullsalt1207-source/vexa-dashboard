@@ -63,7 +63,7 @@
             --amber:         #f59e0b;
             --amber-dim:     rgba(245,158,11,0.1);
             --amber-border:  rgba(245,158,11,0.25);
-            --blue:          #ef4444;
+            --accent:        #ef4444;
             --purple:        #c084fc;
             --purple-dim:    rgba(192,132,252,0.1);
             --purple-border: rgba(192,132,252,0.22);
@@ -214,7 +214,7 @@
         .toast.error   { border-color: rgba(239,68,68,0.25); }
         .toast.success .toast-dot { background: var(--green); box-shadow: 0 0 10px var(--green-glow); }
         .toast.error   .toast-dot { background: #ef4444;  box-shadow: 0 0 10px rgba(239,68,68,0.5); }
-        .toast.info    .toast-dot { background: var(--blue);  box-shadow: 0 0 10px rgba(96,165,250,0.5); }
+        .toast.info    .toast-dot { background: var(--accent);  box-shadow: 0 0 10px rgba(96,165,250,0.5); }
         @keyframes toastIn  { from{opacity:0;transform:translateX(28px) scale(0.9)} to{opacity:1;transform:none} }
         @keyframes toastOut { to{opacity:0;transform:translateX(28px) scale(0.9)} }
 
@@ -550,7 +550,7 @@
             color: var(--red2); border: 1px solid var(--red-border2);
             box-shadow: 0 0 12px rgba(220,38,38,0.2);
         }
-        .nav-badge.free    { background: rgba(96,165,250,0.12);  color: var(--blue); border: 1px solid rgba(96,165,250,0.25); }
+        .nav-badge.free    { background: rgba(96,165,250,0.12);  color: var(--accent); border: 1px solid rgba(96,165,250,0.25); }
         .nav-badge.none    { background: var(--b1); color: var(--t3); border: 1px solid var(--b2); }
         .nav-logout {
             font-size: 0.68rem; font-weight: 600;
@@ -1105,7 +1105,7 @@
         }
         .more-card-icon svg { width: 18px; height: 18px; }
         .more-card-icon.accent-red { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.15); color: var(--red2); }
-        .more-card-icon.accent-blue { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.15); color: var(--blue); }
+        .more-card-icon.accent-blue { background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.15); color: var(--accent); }
         .more-card-icon.accent-purple { background: rgba(192,132,252,0.08); border-color: rgba(192,132,252,0.14); color: var(--purple); }
         .more-card-title { font-size: 0.9rem; font-weight: 700; color: var(--t1); }
         .more-card-badge {
@@ -1364,7 +1364,7 @@
         .preview-content { font-size: 0.78rem; color: var(--t2); margin-bottom: 0.5rem; }
         .preview-button { background: #2e2e2e; border: 1px solid #3e3e3e; border-radius: 4px; padding: 0.2rem 0.8rem; font-size: 0.72rem; display: inline-block; cursor: default; }
         .preview-icon { width: 15px; height: 15px; border-radius: 50%; flex-shrink: 0; }
-        .preview-icon.info    { background: var(--blue); }
+        .preview-icon.info    { background: var(--accent); }
         .preview-icon.warning { background: var(--amber); }
         .preview-icon.error   { background: #ef4444; }
 
@@ -1484,7 +1484,7 @@
         .stat-value.green  { color: var(--green); }
         .stat-value.amber  { color: var(--amber); }
         .stat-value.red    { color: var(--red2); }
-        .stat-value.blue   { color: var(--blue); }
+        .stat-value.blue   { color: var(--accent); }
         .stat-value.purple { color: var(--purple); }
         .stat-value.cyan   { color: var(--cyan); }
         .stat-value.stat-nums { font-family: 'JetBrains Mono', monospace; font-weight: 700; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
@@ -2113,10 +2113,10 @@
             border-radius: var(--radius-sm); margin-bottom: 1rem;
             font-size: 0.8rem; color: var(--t2);
         }
-        .notif-banner svg { width: 17px; height: 17px; color: var(--blue); flex-shrink: 0; }
+        .notif-banner svg { width: 17px; height: 17px; color: var(--accent); flex-shrink: 0; }
         .notif-banner-btn {
             margin-left: auto; background: rgba(96,165,250,0.1); border: 1px solid rgba(96,165,250,0.28);
-            color: var(--blue); padding: 0.3rem 0.85rem; border-radius: 5px; cursor: pointer;
+            color: var(--accent); padding: 0.3rem 0.85rem; border-radius: 5px; cursor: pointer;
             font-size: 0.73rem; font-weight: 700; font-family: 'Syne', sans-serif;
             transition: all 0.15s; white-space: nowrap;
         }
@@ -2318,7 +2318,7 @@
         .hits-table td.col-user { font-weight: 700; color: var(--t1); font-size: 0.9rem; font-family: 'Syne', sans-serif; }
         .hits-table td.col-money { color: var(--green); font-family: 'JetBrains Mono', monospace; font-weight: 700; }
         .hits-table td.col-shards { color: var(--purple); font-family: 'JetBrains Mono', monospace; }
-        .hits-table td.col-playtime { color: var(--blue); font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; }
+        .hits-table td.col-playtime { color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.76rem; }
         .hits-table td.col-time { font-family: 'JetBrains Mono', monospace; font-size: 0.69rem; white-space: nowrap; }
         .hits-table td.col-ip {
             font-family: 'JetBrains Mono', monospace;
@@ -2545,7 +2545,7 @@
         .hit-ip-text { min-width: 0; display: flex; flex-direction: column; gap: 1px; }
         .hit-ip-country { font-size: 0.78rem; font-weight: 700; color: var(--t1); letter-spacing: 0.01em; }
         .hit-ip-addr { font-size: 0.7rem; font-family: 'JetBrains Mono', monospace; color: var(--cyan); font-weight: 600; cursor: pointer; }
-        .hit-ip-addr:hover { color: var(--blue); text-decoration: underline; }
+        .hit-ip-addr:hover { color: var(--accent); text-decoration: underline; }
         .hit-ip-actions { display: flex; align-items: center; gap: 0.25rem; flex-shrink: 0; margin-left: 0.55rem; }
         .hit-ip-expand, .hit-ip-ddos {
             width: 30px; height: 30px; border-radius: 8px; border: 1px solid var(--b2);
@@ -2553,7 +2553,7 @@
             display: inline-flex; align-items: center; justify-content: center;
             font-size: 1rem; font-weight: 700; transition: all 0.18s;
         }
-        .hit-ip-expand:hover { border-color: rgba(96,165,250,0.45); color: var(--blue); background: rgba(96,165,250,0.08); }
+        .hit-ip-expand:hover { border-color: rgba(96,165,250,0.45); color: var(--accent); background: rgba(96,165,250,0.08); }
         .hit-ip-ddos { font-size: 0.75rem; opacity: 0.85; }
         .hit-ip-ddos:hover { border-color: rgba(220,38,38,0.5); color: var(--red2); background: var(--red-dim); }
 
@@ -3683,11 +3683,6 @@ async function fetchMe() {
 }
 
 async function fetchUserStatus() {
-    if (currentUser && currentUser.id === 'admin') {
-        userStatus = { premium: true, free: false, premiumTier: true, displayName: 'Admin', anonymous: false, webhookUrl: '', webhookEnabled: false, webhookPingMinMoney: '', webhookPingOnCrypto: false, webhookConfigured: false };
-        anonymousMode = false;
-        return;
-    }
     try {
         const res = await fetch('/api/user/status', { credentials: 'include' });
         if (res.ok) {

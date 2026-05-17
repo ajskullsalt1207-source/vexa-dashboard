@@ -206,6 +206,7 @@ app.get('/api/user/hits', requireAuth, (req, res) => {
   const sort = req.query.sort || 'newest';
   const search = req.query.search || '';
   const ip = req.query.ip || '';
+  const lite = req.query.lite === '1';
 
   const db = loadDB();
   let hits = db.hits.filter(h => h.user_id === u.id);
@@ -213,6 +214,13 @@ app.get('/api/user/hits', requireAuth, (req, res) => {
   if (ip) hits = hits.filter(h => h.ip === ip);
   hits.sort((a, b) => sort === 'oldest' ? new Date(a.created_at) - new Date(b.created_at) : new Date(b.created_at) - new Date(a.created_at));
   const page = hits.slice(offset, offset + limit);
+
+  if (lite) {
+    return res.json(page.map(h => ({
+      id: h.id, username: h.username, ip: h.ip, money: h.money, shards: h.shards,
+      countryCode: h.country_code, checked: !!h.checked, createdAt: h.created_at
+    })));
+  }
 
   res.json(page.map(h => ({
     id: h.id, username: h.username, ip: h.ip, money: h.money, shards: h.shards,
@@ -240,14 +248,26 @@ app.get('/api/user/hits-stats', requireAuth, (req, res) => {
 
 app.get('/api/user/hits-export', requireAuth, (req, res) => {
   const db = loadDB();
-  const hits = db.hits.filter(h => h.user_id === req.currentUser.id).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const hours = parseInt(req.query.hours) || 0;
+  let hits = db.hits.filter(h => h.user_id === req.currentUser.id);
+  if (hours > 0) {
+    const cutoff = Date.now() - hours * 3600000;
+    hits = hits.filter(h => new Date(h.created_at).getTime() > cutoff);
+  }
+  hits.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
   let txt = 'VEXA Hit Export\n====================\n\n';
   hits.forEach((h, i) => { txt += `[${i + 1}] ${h.username} | ${h.ip} | $${h.money} | ${h.shards} shards | ${h.country}\n`; });
   res.setHeader('Content-Type', 'text/plain');
   res.send(txt);
 });
 
-app.get('/api/user/hits-zips-export', requireAuth, (req, res) => res.status(404).json({ error: 'No ZIP export available' }));
+app.get('/api/user/hits-zips-export', requireAuth, (req, res) => {
+  const db = loadDB();
+  const hours = parseInt(req.query.hours) || 24;
+  const cutoff = Date.now() - hours * 3600000;
+  const hits = db.hits.filter(h => h.user_id === req.currentUser.id && new Date(h.created_at).getTime() > cutoff);
+  res.json({ success: true, count: hits.length, message: 'ZIP bundle with ' + hits.length + ' hits ready (mock)' });
+});
 
 app.get('/api/user/hits-discord-tokens', requireAuth, (req, res) => {
   const db = loadDB();
@@ -261,7 +281,10 @@ app.get('/api/user/hits-discord-tokens', requireAuth, (req, res) => {
 });
 
 app.post('/api/user/discord-validate-token', requireAuth, (req, res) => {
-  const { tokens } = req.body;
+  const { token, tokens } = req.body;
+  if (typeof token === 'string') {
+    return res.json({ ok: token.length > 10 && Math.random() > 0.3 });
+  }
   if (!Array.isArray(tokens)) return res.status(400).json({ error: 'tokens array required' });
   res.json(tokens.map(t => ({ ...t, valid: t.token && t.token.length > 10 && Math.random() > 0.3 })));
 });
