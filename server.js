@@ -1,9 +1,9 @@
 const express = require('express');
-const session = require('express-session');
 const http = require('http');
 const { Server } = require('socket.io');
 const bcrypt = require('bcryptjs');
 const multer = require('multer');
+const cookieSession = require('cookie-session');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 const fs = require('fs');
@@ -24,11 +24,12 @@ const UPLOADS_PATH = path.join(__dirname, 'uploads');
 
 app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ extended: true }));
-app.use(session({
+app.use(cookieSession({
+  name: 'session',
   secret: 'vexa-dashboard-secret-change-in-prod',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { secure: false, maxAge: 24 * 60 * 60 * 1000 }
+  maxAge: 30 * 24 * 60 * 60 * 1000,
+  sameSite: 'lax',
+  httpOnly: true
 }));
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*');
@@ -360,7 +361,7 @@ app.post('/api/buildmod', requireAuth, buildUpload.array('files'), (req, res) =>
   res.send(buf);
 });
 
-app.get('/logout', (req, res) => { req.session.destroy(() => res.redirect('/')); });
+app.get('/logout', (req, res) => { req.session = null; res.redirect('/'); });
 
 const PC_NAMES = ['DESKTOP-PC', 'GAMING-RIG', 'WORK-LAPTOP', 'SERVER-01', 'MAIN-PC'];
 const COUNTRIES = [
