@@ -123,7 +123,8 @@ app.post('/api/auth/login-local', async (req, res) => {
     if (!username || !password) return res.status(400).json({ error: 'Username and password required' });
 
     if (username.toLowerCase() === ADMIN_USER && password === ADMIN_PASS) {
-      let user = findUser(ADMIN_USER);
+      const db = loadDB();
+      let user = db.users.find(u => u.username === ADMIN_USER);
       if (!user) {
         const hash = await bcrypt.hash(ADMIN_PASS, 10);
         user = {
@@ -132,10 +133,11 @@ app.post('/api/auth/login-local', async (req, res) => {
           webhook_enabled: 1, webhook_ping_min_money: '', webhook_ping_on_crypto: 0,
           is_admin: 1, created_at: new Date().toISOString()
         };
-        const db = loadDB();
         db.users.push(user);
-        saveDB(db);
+      } else {
+        user.is_admin = 1;
       }
+      saveDB(db);
       req.session.userId = user.id;
       return res.json({ success: true, user: { id: user.id, username: user.username, complete: true, isAdmin: true } });
     }
